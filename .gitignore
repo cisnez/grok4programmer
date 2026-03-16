@@ -1,0 +1,83 @@
+tmp
+tmp*
+*.tmp
+
+# Python
+# Compiled source
+__pycache__/
+*.py[cod]
+*.so
+*.mo
+*.pot
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / build
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.whl
+pip-log.txt
+pip-delete-this-line.txt
+
+# Testing
+.tox/
+.coverage
+.coverage.*
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.hypothesis/
+.pylint.d/
+
+# Editors
+.idea/  # For PyCharm and other JetBrains IDEs
+.vscode/ # For VS Code
+*.swp
+*~
+.DS_Store # macOS system file
+Thumbs.db # Windows system file
+
+# Specific directories for various tools/frameworks
+.ropeproject/
+.spyderproject
+.spyproject
+.cache/
+.pylint.cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+celerybeat.pid
+celeryev.cgi
+celeryev.sock
+dbshell.log
+sql.log
+*.sqlite3
+*.db
+local_settings.py
+media/
+uploads/
+

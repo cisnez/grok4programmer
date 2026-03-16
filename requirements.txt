@@ -1,0 +1,4 @@
+pygments
+colorama
+openai
+ddgs
