@@ -98,7 +98,7 @@ class AIAssistant:
             return {"success": False, "error": error_msg}
 
     def get_response(self, messages: List[Dict[str, Any]]) -> str:
-        """Fetch response from the XAI model using an iterative loop for tool handling to avoid recursion."""
+        """Fetch response from the XAI model using an iterative loop for tool handling."""
         tools = [
             {
                 "type": "function",
@@ -114,7 +114,7 @@ class AIAssistant:
             }
         ]
         
-        current_messages = messages.copy()  # Work on a copy to avoid modifying original until final
+        current_messages = messages.copy()
         
         for _ in range(self.max_tool_iterations):
             try:
@@ -125,17 +125,15 @@ class AIAssistant:
                     tool_choice="auto",
                     max_tokens=self.max_response_tokens,
                     n=self.n_responses,
-                    stop=None,
                     temperature=self.creativity
                 )
                 
                 message = response.choices[0].message
                 
                 if not message.tool_calls:
-                    # No more tool calls, return the final content
                     return message.content or "No response content."
                 
-                # Append the assistant's message with tool_calls
+                # Append assistant message with tool calls
                 assistant_message = {
                     "role": "assistant",
                     "content": message.content,
@@ -152,24 +150,41 @@ class AIAssistant:
                 }
                 current_messages.append(assistant_message)
                 
-                # Handle all tool calls in parallel
+                # Execute tool calls
                 for tool_call in message.tool_calls:
                     if tool_call.function.name == "web_search":
                         args = json.loads(tool_call.function.arguments)
                         self.print_colored(Fore.YELLOW, f"Searching DuckDuckGo for '{args['query']}'.")
-                        search_result = self.web_search(args['query'])  # Get structured results
+                        search_result = self.web_search(args['query'])
                         
-                        # Append the tool response
                         tool_response = {
                             "role": "tool",
-                            "content": json.dumps(search_result),  # Send as JSON string for LLM to parse
+                            "content": json.dumps(search_result),
                             "tool_call_id": tool_call.id
                         }
                         current_messages.append(tool_response)
+                        
             except Exception as e:
                 return self.handle_error(e, "get_response")
         
-        return "Max tool iterations reached without completion."
+        # === MAX ITERATIONS REACHED: Force final answer ===
+        try:
+            self.print_colored(Fore.YELLOW, "Max tool iterations reached. Forcing final response...")
+            
+            final_response = self.xai_client.chat.completions.create(
+                model=self.llm_model,
+                messages=current_messages,
+                tools=tools,                    # ← REQUIRED when using tool_choice
+                tool_choice="none",             # Now valid because tools are declared
+                max_tokens=self.max_response_tokens,
+                n=self.n_responses,             # Added for consistency
+                temperature=self.creativity
+            )
+            
+            return final_response.choices[0].message.content or "No response content."
+            
+        except Exception as e:
+            return self.handle_error(e, "get_response (final forced response)")
 
     def get_code(self, text: str) -> List[tuple[str, str]]:
         """Extract and highlight Python code from text."""
