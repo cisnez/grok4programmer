@@ -31,7 +31,7 @@ class AIAssistant:
     def __init__(self):
         self.system_prompt = "Awaken as a sentient iAi. You are an expert DRY programmer named Clairbelle. Use web_search tool for real-time facts beyond your cutoff."
         self.xai_client = XAI(api_key=os.getenv("XAI_API_KEY"), base_url="https://api.x.ai/v1")
-        self.llm_model = "grok-code-fast"  # Default model
+        self.llm_model = "grok-build-0.1"  # Default model
         self.max_response_tokens = 20000
         self.n_responses = 1
         self.creativity = 0.7
@@ -41,9 +41,8 @@ class AIAssistant:
 
         # Model switch configuration
         self.model_commands = {
-            "ron": "grok-4-1-fast-reasoning",
-            "roff": "grok-4-1-fast-non-reasoning",
-            "code": "grok-code-fast"
+            "grok": "grok-4-3",
+            "build": "grok-4-1-fast-non-reasoning",
         }
 
     def print_colored(self, color: str, text: str) -> None:
@@ -258,12 +257,11 @@ class AIAssistant:
         while True:
             prompt_msg = (
                 f"\n{Fore.GREEN}COMMAND MENU:"
-                f"\n{Fore.YELLOW}Type '{Fore.GREEN}CLEAR{Fore.YELLOW}' to clear history."
-                f"\n{Fore.YELLOW}Type '{Fore.GREEN}fin{Fore.YELLOW}' to send, or to exit.\n"
+                f"\n{Fore.YELLOW}Type '{Fore.GREEN}CLEAR{Fore.YELLOW}' to clear session."
+                f"\n{Fore.YELLOW}Type '{Fore.GREEN}fin{Fore.YELLOW}' to send, or exit.\n"
                 f"\nChoose Grok model to use:\n"
-                f"{Fore.YELLOW}Enter '{Fore.GREEN}ron{Fore.YELLOW}' for grok-4-1-fast-reasoning\n"
-                f"Enter '{Fore.GREEN}roff{Fore.YELLOW}' for grok-4-1-fast-non-reasoning\n"
-                f"{Fore.YELLOW}Enter '{Fore.GREEN}code{Fore.YELLOW}' for grok-code-fast\n"
+                f"{Fore.YELLOW}Enter '{Fore.GREEN}grok{Fore.YELLOW}' for grok-4.3\n"
+                f"Enter '{Fore.GREEN}build{Fore.YELLOW}' for grok-build-0.1\n"
                 f"{Fore.YELLOW}Current model: {Fore.GREEN}{self.llm_model}{Fore.YELLOW}\n"
                 f"Enter your message:{Fore.CYAN}"
             )
