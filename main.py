@@ -41,7 +41,7 @@ class AIAssistant:
 
         # Model switch configuration
         self.model_commands = {
-            "grok": "grok-4-3",
+            "grok": "grok-4.3",
             "build": "grok-4-1-fast-non-reasoning",
         }
 
