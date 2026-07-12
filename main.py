@@ -41,8 +41,8 @@ class AIAssistant:
 
         # Model switch configuration
         self.model_commands = {
-            "grok": "grok-4.3",
-            "build": "grok-4-1-fast-non-reasoning",
+            "grok": "grok-4.5-latest",
+            "build": "grok-build-latest",
         }
 
     def print_colored(self, color: str, text: str) -> None:
