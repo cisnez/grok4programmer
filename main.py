@@ -41,7 +41,7 @@ class AIAssistant:
 
         # Model switch configuration
         self.model_commands = {
-            "grok": "grok-4.5-latest",
+            "grok": "grok-4.6",
             "build": "grok-build-latest",
         }
 
@@ -260,7 +260,7 @@ class AIAssistant:
                 f"\n{Fore.YELLOW}Type '{Fore.GREEN}CLEAR{Fore.YELLOW}' to clear session."
                 f"\n{Fore.YELLOW}Type '{Fore.GREEN}fin{Fore.YELLOW}' to send, or exit.\n"
                 f"\nChoose Grok model to use:\n"
-                f"{Fore.YELLOW}Enter '{Fore.GREEN}grok{Fore.YELLOW}' for grok-4.5-latest\n"
+                f"{Fore.YELLOW}Enter '{Fore.GREEN}grok{Fore.YELLOW}' for grok-4.6\n"
                 f"Enter '{Fore.GREEN}build{Fore.YELLOW}' for grok-build-latest\n"
                 f"{Fore.YELLOW}Current model: {Fore.GREEN}{self.llm_model}{Fore.YELLOW}\n"
                 f"Enter your message:{Fore.CYAN}"
