@@ -1,4 +1,5 @@
 # grok4programmer
+# Have you tried Grok Build? https://x.ai/build
 # main.py
 import logging
 import os
